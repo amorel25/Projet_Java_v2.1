@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Goban {
-    private final int width;
+/*    private final int width;
 
     private final int height;
 
@@ -123,5 +123,5 @@ public class Goban {
 
     public boolean play(Intersection intersection, Player player, boolean handleKo){
        
-    }
+    }*/
 }
