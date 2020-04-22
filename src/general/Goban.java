@@ -1,18 +1,19 @@
 package general;
 
 import game.GameRecord;
+import game.Intersection;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class Goban {
-/*    private final int width;
+   private final int width;
 
     private final int height;
 
     private final Intersection[][] intersections;
 
-    private final GameRecord gameRecord;
+//    private final GameRecord gameRecord;
 
     private Set<Intersection> lastCaptured;
 
@@ -39,20 +40,20 @@ public class Goban {
         this.initHandicap = handicap;
         this.successivePassCount = 0;
         this.intersections = new Intersection[width][height];
-        this.gameRecord = new GameRecord(width, height, handicap);
+//        this.gameRecord = new GameRecord(width, height, handicap);
         initGoban();
     }
 
     public Goban(GameRecord gameRecord1){
-        this.gameRecord = gameRecord1;
-        this.width = gameRecord.getLastTurn().getGobanState().length;
-        this.height = gameRecord.getLastTurn().getGobanState()[0].length;
-        this.initHandicap = gameRecord.getHandicap();
+ //       this.gameRecord = gameRecord1;
+        this.width = 1; //gameRecord.getLastTurn().getGobanState().length;
+        this.height = 1; //gameRecord.getLastTurn().getGobanState()[0].length;
+        this.initHandicap = getHandicap(); //gameRecord.getHandicap();
 
         intersections = new Intersection[width][height];
         initGoban();
 
-        if(gameRecord.nbPreceding() > initHandicap){
+ /*       if(gameRecord.nbPreceding() > initHandicap){
             if((gameRecord.nbPreceding() - initHandicap)%2 == 1){
                 currentPlayer = p2;
             }
@@ -66,6 +67,7 @@ public class Goban {
         }catch (Exception e){
             //message par défaut
         }
+        */
     }
 
     public int getWidth() {
@@ -76,9 +78,9 @@ public class Goban {
         return height;
     }
 
-    public GameRecord getGameRecord() {
+ /*   public GameRecord getGameRecord() {
         return gameRecord;
-    }
+    }*/
 
     public int getHandicap() {
         return initHandicap;
@@ -103,6 +105,14 @@ public class Goban {
         handicap = 0;
     }
 
+    public Intersection getIntersection(int x, int y){
+        if(isInGoban(x,y)){
+            return intersections[x][y];
+        }else{
+            return null;
+        }
+    }
+
     public boolean isInGoban(int x, int y) {
         return (x >= 0 && x < width && y >= 0 && y < height);
     }
@@ -122,6 +132,6 @@ public class Goban {
     }
 
     public boolean play(Intersection intersection, Player player, boolean handleKo){
-       
-    }*/
+       return true;
+    }
 }
