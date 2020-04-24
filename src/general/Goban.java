@@ -7,9 +7,21 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Goban {
-    private final int width;
+    private static Goban single_instance;
+    private static int height;
+    private static int width;
 
-    private final int height;
+    static {
+        single_instance = null;
+    }
+
+
+    public static Goban getInstance(){
+        if(single_instance == null){
+            single_instance = new Goban(width, height);
+        }
+        return single_instance;
+    }
 
     private final Intersection[][] intersections;
 
@@ -44,7 +56,7 @@ public class Goban {
         initGoban();
     }
 
-    public Goban(GameRecord gameRecord1){
+/*    public Goban(GameRecord gameRecord1){
         this.gameRecord = gameRecord1;
         this.width = gameRecord.getLastTurn().getGobanState().length;
         this.height = gameRecord.getLastTurn().getGobanState()[0].length;
@@ -68,7 +80,7 @@ public class Goban {
             //message par défaut
         }
     }
-
+*/
     public int getWidth() {
         return width;
     }
@@ -122,7 +134,12 @@ public class Goban {
         }
     }
 
-    public boolean play(Intersection intersection, Player player, boolean handleKo){
-       
+    public Intersection getIntersection(int x, int y){
+        if(isInGoban(x,y)){
+            return intersections[x][y];
+        }else{
+            return null;
+        }
     }
+
 }
