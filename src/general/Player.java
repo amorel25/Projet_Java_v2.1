@@ -34,7 +34,7 @@ public class Player {
         capturedStones -= nb;
     }
 
-    //faire jouer le joueur retourne "true" si le mouvement est possible
+/*    //faire jouer le joueur retourne "true" si le mouvement est possible
     public boolean play(Goban goban, int x, int y){
         if(x == -1 && y == -1){
             GameRecord record = goban.getGameRecord();
@@ -44,10 +44,10 @@ public class Player {
         }else{
             return goban.play(goban.getIntersection(x,y), this);
         }
-    }
+    }*/
 
     @Override
     public String toString(){
-        return "Joueur "+identity;
+        return "Joueur "+identity+" pierre capturé : "+capturedStones;
     }
 }
