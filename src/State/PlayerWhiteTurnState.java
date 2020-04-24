@@ -2,10 +2,10 @@ package State;
 
 import general.GameManager;
 
-public class PlayerTurnState implements GameState {
+public class PlayerWhiteTurnState implements GameState {
     private GameManager game;
 
-    public PlayerTurnState(GameManager game) {
+    public PlayerWhiteTurnState(GameManager game) {
         this.game = game;
     }
 
@@ -17,6 +17,11 @@ public class PlayerTurnState implements GameState {
     @Override
     public void endPlayerTurn() {
         System.out.println("end player turn");
+    }
+
+    @Override
+    public void endGame() {
+        return;
     }
 
     @Override

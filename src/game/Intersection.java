@@ -45,7 +45,7 @@ public class Intersection {
         Set<Stone> adjacentStoneChains = new HashSet<Stone>();
 
         int [] dx = {-1,0,1,0}, dy = {0,-1,0,1};
-        assert dx.length == dy.length : "dx and dy should have the same lenght";
+        assert dx.length == dy.length : "dx et dy doivent avoir la même longueur";
 
         for(int i = 0; i < dx.length ; i++){
             int newX = x + dx[i];
@@ -66,7 +66,7 @@ public class Intersection {
         List<Intersection> emptyNeighors = new ArrayList<Intersection>();
 
         int [] dx = {-1,0,1,0}, dy = {0,-1,0,1};
-        assert dx.length == dy.length : "dx and dy should have the same lenght";
+        assert dx.length == dy.length : "dx et dy doivent avoir la même longueur";
 
         for(int i = 0; i < dx.length ; i++) {
             int newX = x + dx[i];
@@ -88,7 +88,7 @@ public class Intersection {
         List<Intersection> emptyNeighors = new ArrayList<Intersection>();
 
         int [] dx = {-1,0,1,0}, dy = {0,-1,0,1};
-        assert dx.length == dy.length : "dx and dy should have the same lenght";
+        assert dx.length == dy.length : "dx et dy doivent avoir la même longueur";
 
         for(int i = 0; i < dx.length ; i++) {
             int newX = x + dx[i];

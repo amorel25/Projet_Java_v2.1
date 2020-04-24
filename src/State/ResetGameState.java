@@ -20,6 +20,11 @@ public class ResetGameState implements GameState {
     }
 
     @Override
+    public void endGame() {
+        return;
+    }
+
+    @Override
     public void resetGame() {
         System.out.println("reset");
     }

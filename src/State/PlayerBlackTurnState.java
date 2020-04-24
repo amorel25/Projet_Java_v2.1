@@ -2,21 +2,21 @@ package State;
 
 import general.GameManager;
 
-public class StartState implements GameState {
+public class PlayerBlackTurnState implements GameState {
     private GameManager game;
 
-    public StartState(GameManager game) {
+    public PlayerBlackTurnState(GameManager game) {
         this.game = game;
     }
 
     @Override
     public void startGame() {
-        System.out.println("startGame");
+        return;
     }
 
     @Override
     public void endPlayerTurn() {
-        return;
+        System.out.println("end player turn");
     }
 
     @Override

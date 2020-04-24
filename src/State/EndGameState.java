@@ -1,17 +1,9 @@
 package State;
 
-import general.GameManager;
-
-public class StartState implements GameState {
-    private GameManager game;
-
-    public StartState(GameManager game) {
-        this.game = game;
-    }
-
+public class EndGameState implements GameState {
     @Override
     public void startGame() {
-        System.out.println("startGame");
+        return;
     }
 
     @Override
@@ -21,7 +13,7 @@ public class StartState implements GameState {
 
     @Override
     public void endGame() {
-        return;
+        System.out.println("end game");
     }
 
     @Override
