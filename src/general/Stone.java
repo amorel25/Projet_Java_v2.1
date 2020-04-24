@@ -57,11 +57,11 @@ public class Stone {
         return newStoneChain;
     }
 
-    public void die(){
-        for(Intersection rollingStone : this.stones){
+    public void die() {
+        for (Intersection rollingStone : this.stones) {
             rollingStone.setStoneChain(null);
             Set<Stone> adjacentStoneChains = rollingStone.getAjacentStoneChains();
-            for(Stone stone : adjacentStoneChains){
+            for (Stone stone : adjacentStoneChains) {
                 stone.liberties.add(rollingStone);
             }
         }
