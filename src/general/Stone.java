@@ -47,6 +47,25 @@ public class Stone {
     public void addStone(Stone stoneChain, Intersection playedStone){
         this.stones.addAll(stoneChain.stones);
         this.liberties.addAll(stoneChain.liberties);
-        this.liberties.remove()
+        this.liberties.remove(playedStone);
+
+    }
+
+    public Stone removeLiberty(Intersection playedStone){
+        Stone newStoneChain = new Stone(stones, liberties, owner);
+        newStoneChain.liberties.remove(playedStone);
+        return newStoneChain;
+    }
+
+    public void die(){
+        for(Intersection rollingStone : this.stones){
+            rollingStone.setStoneChain(null);
+            Set<Stone> adjacentStoneChains = rollingStone.getAjacentStoneChains();
+            for(Stone stone : adjacentStoneChains){
+                stone.liberties.add(rollingStone);
+            }
+        }
+
+        this.owner.addCapturedStones(this.stones.size());
     }
 }
