@@ -1,9 +1,5 @@
 package general;
 
-import game.GameRecord;
-
-import java.util.Collections;
-
 public class Player {
     private final int identity;
 
