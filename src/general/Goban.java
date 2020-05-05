@@ -6,8 +6,6 @@ public class Goban {
     private static Goban single_instance;
     private static int height;
     private static int width;
-    //handicap pierre
-    private static int handicap;
 
     static {
         single_instance = null;
@@ -16,21 +14,17 @@ public class Goban {
 
     public static Goban getInstance(){
         if(single_instance == null){
-            single_instance = new Goban(width, height, handicap);
+            single_instance = new Goban(9, 9);
         }
         return single_instance;
     }
 
     private final Intersection[][] intersections;
 
-    //handicap initial
-    private final int initHandicap;
-
     //constructeur avec les dimensions et le handicap
-    public Goban(int width, int height, int handicap) {
+    public Goban(int width, int height) {
         this.width = width;
         this.height = height;
-        this.initHandicap = handicap;
         this.intersections = new Intersection[width][height];
     }
 
@@ -40,10 +34,6 @@ public class Goban {
 
     public int getHeight() {
         return height;
-    }
-
-    public int getHandicap() {
-        return initHandicap;
     }
 
     public boolean isInGoban(int x, int y) {
