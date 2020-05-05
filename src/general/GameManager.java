@@ -14,8 +14,7 @@ public class GameManager extends Observable {
     private GameState resetGame;
     private GameState currentState;
 
-    public Player p1;
-    public Player p2;
+    private Player player;
 
     public GameManager(){
         goban = Goban.getInstance();
@@ -25,8 +24,6 @@ public class GameManager extends Observable {
         resetGame = new ResetGameState(this);
         currentState = startState;
 
-        p1 = new Player(1);
-        p2 = new Player(2);
     }
 
     public void setState(GameState newState){
