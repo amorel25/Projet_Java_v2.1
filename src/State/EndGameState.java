@@ -7,7 +7,12 @@ public class EndGameState implements GameState {
     }
 
     @Override
-    public void endPlayerTurn() {
+    public void BlackPlayerTurn() {
+        return;
+    }
+
+    @Override
+    public void WhitePlayerTurn() {
         return;
     }
 

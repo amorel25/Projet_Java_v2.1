@@ -1,7 +1,7 @@
 package general;
 
 import State.GameState;
-import State.PlayerWhiteTurnState;
+import State.WhitePlayerTurnState;
 import State.ResetGameState;
 import State.StartState;
 
@@ -14,19 +14,16 @@ public class GameManager extends Observable {
     private GameState resetGame;
     private GameState currentState;
 
-    public Player p1;
-    public Player p2;
+    private Player player;
 
     public GameManager(){
         goban = Goban.getInstance();
 
         startState = new StartState(this);
-        endPlayerTurn = new PlayerWhiteTurnState(this);
+        endPlayerTurn = new WhitePlayerTurnState(this);
         resetGame = new ResetGameState(this);
         currentState = startState;
 
-        p1 = new Player(1);
-        p2 = new Player(2);
     }
 
     public void setState(GameState newState){
