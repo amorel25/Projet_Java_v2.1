@@ -393,11 +393,15 @@ public class MainWindow extends JFrame implements Observer {
         info.add(undoAction);
 
         startAction.addActionListener(new StartActionListener());
+        resetAction.addActionListener(new ResetActionListener());
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+
+    }
 
     private class StartActionListener implements ActionListener{
-
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("action performed start");
@@ -405,8 +409,13 @@ public class MainWindow extends JFrame implements Observer {
         }
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-
+    private class ResetActionListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("action performed reset");
+            game.getCurrentState().resetGame();
+            board.repaint();
+        }
     }
+
 }

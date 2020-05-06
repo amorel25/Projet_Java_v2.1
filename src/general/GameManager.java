@@ -52,4 +52,17 @@ public class GameManager extends Observable {
                 throw new IllegalArgumentException("Joueur non trouvé");
         }
     }
+
+    public void playStone(Player playerColor, int x, int y){
+        switch (playerColor){
+            case WHITE:
+                System.out.println(playerColor+" x :"+x+" y: "+y);
+                return;
+            case BLACK:
+                System.out.println(playerColor+" x :"+x+" y: "+y);
+                return;
+            default:
+                System.out.println("Erreur sur la couleur du joueur");
+        }
+    }
 }

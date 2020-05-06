@@ -1,9 +1,11 @@
 package State;
 
 import general.GameManager;
+import general.Player;
 
 public class BlackPlayerTurnState implements GameState {
     private GameManager game;
+
 
     public BlackPlayerTurnState(GameManager game) {
         this.game = game;
@@ -15,13 +17,15 @@ public class BlackPlayerTurnState implements GameState {
     }
 
     @Override
-    public void BlackPlayerTurn() {
+    public void BlackPlayerTurn(GameManager game, Player colorPlayer, int x, int y) {
         System.out.println("Black player turn");
+        this.game = game;
+        game.playStone(colorPlayer, x, y);
     }
 
     @Override
-    public void WhitePlayerTurn() {
-        return;
+    public void WhitePlayerTurn(GameManager game, Player colorPlayer, int x, int y) {
+
     }
 
     @Override
