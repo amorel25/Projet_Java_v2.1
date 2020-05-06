@@ -11,11 +11,11 @@ import java.util.Observer;
 
 import static javax.swing.SwingConstants.CENTER;
 
-public class MainWindow extends JFrame implements ActionListener, Observer {
-    private final int dim = 10;
+public class MainWindow extends JFrame implements Observer {
     private JFrame gameWindow;
-    private JPanel board = new JPanel();
-    private JPanel info = new JPanel();
+    private GameManager game;
+    private final JPanel board = new JPanel();
+    private final JPanel info = new JPanel();
 
     //variable pour board
     private final JLabel blank = new JLabel(" ");
@@ -130,32 +130,33 @@ public class MainWindow extends JFrame implements ActionListener, Observer {
     ImageIcon cross = new ImageIcon("asset/c.png");
 
     //variable pour info
-    private JLabel param = new JLabel("");
-    private JButton startAction = new JButton("Lancer partie");
-    private JButton resetAction = new JButton("Nouvelle partie");
-    private JPanel xPanel = new JPanel();
-    private JPanel yPanel = new JPanel();
-    private JLabel coorLabel = new JLabel("coordonnées : ");
-    private JLabel positionX = new JLabel("x : ");
-    private JLabel positionY = new JLabel("y : ");
-    private JTextField positionXField = new JTextField();
-    private JTextField positionYField = new JTextField();
-    private JLabel playerLabel = new JLabel("Joueurs : ");
-    private JLabel blackPlayer = new JLabel("Black");
-    private JLabel whitePlayer = new JLabel("White");
-    private JLabel scoreLabel = new JLabel("Scores : ");
-    private JLabel blackScore = new JLabel("0");
-    private JLabel whiteScore = new JLabel("0");
-    private JLabel actionLabel = new JLabel("Autres action :");
-    private JButton passAction = new JButton("Passer");
-    private JButton undoAction = new JButton("Annuler");
+    private final JLabel param = new JLabel("");
+    private final JButton startAction = new JButton("Lancer partie");
+    private final JButton resetAction = new JButton("Nouvelle partie");
+    private final JPanel xPanel = new JPanel();
+    private final JPanel yPanel = new JPanel();
+    private final JButton validCoor = new JButton("Valider coordonnées");
+    private final JLabel positionX = new JLabel("x : ");
+    private final JLabel positionY = new JLabel("y : ");
+    private final JTextField positionXField = new JTextField();
+    private final JTextField positionYField = new JTextField();
+    private final JLabel playerLabel = new JLabel("Joueurs : ");
+    private final JLabel blackPlayer = new JLabel("Black");
+    private final JLabel whitePlayer = new JLabel("White");
+    private final JLabel scoreLabel = new JLabel("Scores : ");
+    private final JLabel blackScore = new JLabel("0");
+    private final JLabel whiteScore = new JLabel("0");
+    private final JLabel actionLabel = new JLabel("Autres action :");
+    private final JButton passAction = new JButton("Passer");
+    private final JButton undoAction = new JButton("Annuler");
 
 
-    public MainWindow(GameManager jeu) {
+    public MainWindow(GameManager game) {
         this.setTitle("Jeu de Go");
-        this.setExtendedState(this.MAXIMIZED_BOTH);
+        this.setExtendedState(MAXIMIZED_BOTH);
         this.setLocation(0,0);
         this.setVisible(true);
+        this.game = game;
         this.getContentPane().setLayout(new GridLayout(1,2));
         this.getContentPane().add(board);
         this.getContentPane().add(info);
@@ -167,7 +168,8 @@ public class MainWindow extends JFrame implements ActionListener, Observer {
     public void init(){
         System.out.println("init");
         //Création du plateau
-        board.setLayout(new GridLayout(dim,dim, 0,0));
+        int dim = 10;
+        board.setLayout(new GridLayout(dim, dim, 0,0));
         board.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 
         lb.setIcon(leftBottom);
@@ -374,12 +376,12 @@ public class MainWindow extends JFrame implements ActionListener, Observer {
         yPanel.add(positionY);
         yPanel.add(positionYField);
 
-        info.add(param);
         info.add(startAction);
+        info.add(param);
         info.add(resetAction);
-        info.add(coorLabel);
         info.add(xPanel);
         info.add(yPanel);
+        info.add(validCoor);
         info.add(playerLabel);
         info.add(blackPlayer);
         info.add(whitePlayer);
@@ -389,11 +391,18 @@ public class MainWindow extends JFrame implements ActionListener, Observer {
         info.add(actionLabel);
         info.add(passAction);
         info.add(undoAction);
+
+        startAction.addActionListener(new StartActionListener());
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
 
+    private class StartActionListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("action performed start");
+            game.getCurrentState().startGame();
+        }
     }
 
     @Override

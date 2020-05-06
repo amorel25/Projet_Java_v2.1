@@ -10,17 +10,13 @@ import java.util.Observable;
 public class GameManager extends Observable {
     private Goban goban;
     private GameState startState;
-    private GameState endPlayerTurn;
     private GameState resetGame;
     private GameState currentState;
-
-    private Player player;
 
     public GameManager(){
         goban = Goban.getInstance();
 
         startState = new StartState(this);
-        endPlayerTurn = new WhitePlayerTurnState(this);
         resetGame = new ResetGameState(this);
         currentState = startState;
 
@@ -31,18 +27,29 @@ public class GameManager extends Observable {
     }
 
     public GameState getStartState() {
-        return startState;
-    }
-
-    public GameState getEndPlayerTurn() {
-        return endPlayerTurn;
+        return this.startState;
     }
 
     public GameState getResetGame() {
-        return resetGame;
+        return this.resetGame;
     }
 
     public GameState getCurrentState() {
         return currentState;
+    }
+
+    public void initPlayer(Player player){
+        switch (player){
+            case BLACK:
+                System.out.println("joueur noir");
+                //initialiser avec 0 pierres placées et score = 0
+                return;
+            case WHITE:
+                System.out.println("joueur blanc");
+                //initialiser avec 0 pierres placées et score = 0
+                return;
+            default:
+                throw new IllegalArgumentException("Joueur non trouvé");
+        }
     }
 }
