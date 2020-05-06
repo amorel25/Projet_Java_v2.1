@@ -1,6 +1,7 @@
 package State;
 
 import general.GameManager;
+import general.Player;
 
 public class StartState implements GameState {
     private GameManager game;
@@ -12,6 +13,8 @@ public class StartState implements GameState {
     @Override
     public void startGame() {
         System.out.println("startGame");
+        game.initPlayer(Player.BLACK);
+        game.initPlayer(Player.WHITE);
     }
 
     @Override

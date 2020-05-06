@@ -7,9 +7,9 @@ public class Main {
     public static void main(String[] args) {
 	    System.out.println("hello");
 
-	    GameManager jeu = new GameManager();
-        MainWindow win = new MainWindow(jeu);
-        jeu.addObserver(win);
+	    GameManager game = new GameManager();
+        MainWindow win = new MainWindow(game);
+        game.addObserver(win);
 
         Stone stone = new Stone(Player.BLACK,5,5);
         Stone stone1 = new Stone(Player.WHITE,1,1);
