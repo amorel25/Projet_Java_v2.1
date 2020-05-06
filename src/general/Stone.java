@@ -1,71 +1,53 @@
 package general;
 
+import State.GameState;
 import game.Intersection;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class Stone {
 
-    private final Set<Intersection> stones;
 
-    private final Set<Intersection> liberties;
 
-    private final Player owner;
+  private final Player colorPlayer;
+  private final int x;
+  private final int y;
 
-    public Stone(Set<Intersection> stones, Set<Intersection> liberties, Player owner) {
-        this.stones = stones;
-        this.liberties = liberties;
-        this.owner = owner;
-    }
 
-    public Stone(Intersection intersection, Player owner) {
-        stones = new HashSet<Intersection>();
-        stones.add(intersection);
-        this.owner = owner;
-        liberties = new HashSet<Intersection>(intersection.getEmptyNeighbors());
-    }
-
-    public Stone(Stone stoneChain){
-        this.stones = new HashSet<Intersection>(stoneChain.stones);
-        this.liberties = new HashSet<>(stoneChain.liberties);
-        this.owner = stoneChain.owner;
-    }
-
-    public Player getOwner(){
-        return owner;
-    }
-
-    public Set<Intersection> getLiberties(){
-        return liberties;
-    }
-
-    public Set<Intersection> getStones() {
-        return stones;
-    }
-
-    public void addStone(Stone stoneChain, Intersection playedStone){
-        this.stones.addAll(stoneChain.stones);
-        this.liberties.addAll(stoneChain.liberties);
-        this.liberties.remove(playedStone);
+    public Stone(Player colorPlayer, int x, int y) {
+        this.colorPlayer = colorPlayer;
+        this.x = x;
+        this.y = y;
 
     }
 
-    public Stone removeLiberty(Intersection playedStone){
-        Stone newStoneChain = new Stone(stones, liberties, owner);
-        newStoneChain.liberties.remove(playedStone);
-        return newStoneChain;
+    public Player getColorPlayer() {
+        return colorPlayer;
     }
 
-    public void die() {
-        for (Intersection rollingStone : this.stones) {
-            rollingStone.setStoneChain(null);
-            Set<Stone> adjacentStoneChains = rollingStone.getAjacentStoneChains();
-            for (Stone stone : adjacentStoneChains) {
-                stone.liberties.add(rollingStone);
-            }
-        }
+    public int getX() {
+        return x;
+    }
 
-        this.owner.addCapturedStones(this.stones.size());
+    public int getY() {
+        return y;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Stone stone = (Stone) o;
+        return x == stone.x &&
+                y == stone.y &&
+                colorPlayer == stone.colorPlayer;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(colorPlayer, x, y);
     }
 }

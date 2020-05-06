@@ -2,10 +2,10 @@ package State;
 
 import general.GameManager;
 
-public class PlayerWhiteTurnState implements GameState {
+public class BlackPlayerTurnState implements GameState {
     private GameManager game;
 
-    public PlayerWhiteTurnState(GameManager game) {
+    public BlackPlayerTurnState(GameManager game) {
         this.game = game;
     }
 
@@ -15,8 +15,13 @@ public class PlayerWhiteTurnState implements GameState {
     }
 
     @Override
-    public void endPlayerTurn() {
-        System.out.println("end player turn");
+    public void BlackPlayerTurn() {
+        System.out.println("Black player turn");
+    }
+
+    @Override
+    public void WhitePlayerTurn() {
+        return;
     }
 
     @Override
