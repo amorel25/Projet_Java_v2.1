@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -18,6 +19,8 @@ public class MainWindow extends JFrame implements Observer {
     private final JPanel info = new JPanel();
 
     //variable pour board
+    private ArrayList<JLabel> board2 = new ArrayList<JLabel>();
+
     private final JLabel blank = new JLabel(" ");
     private final JLabel nl1 = new JLabel("1");
     private final JLabel nl2 = new JLabel("2");
@@ -370,6 +373,7 @@ public class MainWindow extends JFrame implements Observer {
 
         positionXField.setPreferredSize(new Dimension(50,30));
         positionYField.setPreferredSize(new Dimension(50,30));
+
 
         xPanel.add(positionX);
         xPanel.add(positionXField);

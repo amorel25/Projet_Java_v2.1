@@ -1,6 +1,7 @@
 package State;
 
 import general.GameManager;
+import general.Player;
 
 public class ResetGameState implements GameState {
     private GameManager game;
@@ -15,13 +16,13 @@ public class ResetGameState implements GameState {
     }
 
     @Override
-    public void BlackPlayerTurn() {
-        return;
+    public void BlackPlayerTurn(GameManager game, Player colorPlayer, int x, int y) {
+
     }
 
     @Override
-    public void WhitePlayerTurn() {
-        return;
+    public void WhitePlayerTurn(GameManager game, Player colorPlayer, int x, int y) {
+
     }
 
     @Override
