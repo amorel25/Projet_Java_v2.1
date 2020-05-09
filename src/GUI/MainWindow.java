@@ -6,6 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -16,111 +20,26 @@ public class MainWindow extends JFrame implements Observer {
     private JFrame gameWindow;
     private GameManager game;
     private final JPanel board = new JPanel();
+    private CaseModel[][] board2;
     private final JPanel info = new JPanel();
+    private char[][] map;
+    private File file;
+    private String nameFile = "asset/board.txt";
 
     //variable pour board
-    private ArrayList<JLabel> board2 = new ArrayList<JLabel>();
+    ArrayList<JLabel> label = new ArrayList<JLabel>();
 
     private final JLabel blank = new JLabel(" ");
-    private final JLabel nl1 = new JLabel("1");
-    private final JLabel nl2 = new JLabel("2");
-    private final JLabel nl3 = new JLabel("3");
-    private final JLabel nl4 = new JLabel("4");
-    private final JLabel nl5 = new JLabel("5");
-    private final JLabel nl6 = new JLabel("6");
-    private final JLabel nl7 = new JLabel("7");
-    private final JLabel nl8 = new JLabel("8");
-    private final JLabel nl9 = new JLabel("9");
-    private final JLabel nc1 = new JLabel("1");
-    private final JLabel nc2 = new JLabel("2");
-    private final JLabel nc3 = new JLabel("3");
-    private final JLabel nc4 = new JLabel("4");
-    private final JLabel nc5 = new JLabel("5");
-    private final JLabel nc6 = new JLabel("6");
-    private final JLabel nc7 = new JLabel("7");
-    private final JLabel nc8 = new JLabel("8");
-    private final JLabel nc9 = new JLabel("9");
-    private final JLabel lb = new JLabel();
-    private final JLabel rb = new JLabel();
-    private final JLabel b1 = new JLabel();
-    private final JLabel b2 = new JLabel();
-    private final JLabel b3 = new JLabel();
-    private final JLabel b4 = new JLabel();
-    private final JLabel b5 = new JLabel();
-    private final JLabel b6 = new JLabel();
-    private final JLabel b7 = new JLabel();
-    private final JLabel r1 = new JLabel();
-    private final JLabel r2 = new JLabel();
-    private final JLabel r3 = new JLabel();
-    private final JLabel r4 = new JLabel();
-    private final JLabel r5 = new JLabel();
-    private final JLabel r6 = new JLabel();
-    private final JLabel r7 = new JLabel();
-    private final JLabel l1 = new JLabel();
-    private final JLabel l2 = new JLabel();
-    private final JLabel l3 = new JLabel();
-    private final JLabel l4 = new JLabel();
-    private final JLabel l5 = new JLabel();
-    private final JLabel l6 = new JLabel();
-    private final JLabel l7 = new JLabel();
-    private final JLabel lt = new JLabel();
-    private final JLabel rt = new JLabel();
-    private final JLabel t1 = new JLabel();
-    private final JLabel t2 = new JLabel();
-    private final JLabel t3 = new JLabel();
-    private final JLabel t4 = new JLabel();
-    private final JLabel t5 = new JLabel();
-    private final JLabel t6 = new JLabel();
-    private final JLabel t7 = new JLabel();
-    private final JLabel cr11 = new JLabel();
-    private final JLabel cr21 = new JLabel();
-    private final JLabel cr31 = new JLabel();
-    private final JLabel cr41 = new JLabel();
-    private final JLabel cr51 = new JLabel();
-    private final JLabel cr61 = new JLabel();
-    private final JLabel cr71 = new JLabel();
-    private final JLabel cr12 = new JLabel();
-    private final JLabel cr22 = new JLabel();
-    private final JLabel cr32 = new JLabel();
-    private final JLabel cr42 = new JLabel();
-    private final JLabel cr52 = new JLabel();
-    private final JLabel cr62 = new JLabel();
-    private final JLabel cr72 = new JLabel();
-    private final JLabel cr13 = new JLabel();
-    private final JLabel cr23 = new JLabel();
-    private final JLabel cr33 = new JLabel();
-    private final JLabel cr43 = new JLabel();
-    private final JLabel cr53 = new JLabel();
-    private final JLabel cr63 = new JLabel();
-    private final JLabel cr73 = new JLabel();
-    private final JLabel cr14 = new JLabel();
-    private final JLabel cr24 = new JLabel();
-    private final JLabel cr34 = new JLabel();
-    private final JLabel cr44 = new JLabel();
-    private final JLabel cr54 = new JLabel();
-    private final JLabel cr64 = new JLabel();
-    private final JLabel cr74 = new JLabel();
-    private final JLabel cr15 = new JLabel();
-    private final JLabel cr25 = new JLabel();
-    private final JLabel cr35 = new JLabel();
-    private final JLabel cr45 = new JLabel();
-    private final JLabel cr55 = new JLabel();
-    private final JLabel cr65 = new JLabel();
-    private final JLabel cr75 = new JLabel();
-    private final JLabel cr16 = new JLabel();
-    private final JLabel cr26 = new JLabel();
-    private final JLabel cr36 = new JLabel();
-    private final JLabel cr46 = new JLabel();
-    private final JLabel cr56 = new JLabel();
-    private final JLabel cr66 = new JLabel();
-    private final JLabel cr76 = new JLabel();
-    private final JLabel cr17 = new JLabel();
-    private final JLabel cr27 = new JLabel();
-    private final JLabel cr37 = new JLabel();
-    private final JLabel cr47 = new JLabel();
-    private final JLabel cr57 = new JLabel();
-    private final JLabel cr67 = new JLabel();
-    private final JLabel cr77 = new JLabel();
+    private final JLabel n1 = new JLabel("1");
+    private final JLabel n2 = new JLabel("2");
+    private final JLabel n3 = new JLabel("3");
+    private final JLabel n4 = new JLabel("4");
+    private final JLabel n5 = new JLabel("5");
+    private final JLabel n6 = new JLabel("6");
+    private final JLabel n7 = new JLabel("7");
+    private final JLabel n8 = new JLabel("8");
+    private final JLabel n9 = new JLabel("9");
+    private final JLabel image = new JLabel();
 
     ImageIcon leftBottom = new ImageIcon("asset/bl.png");
     ImageIcon rightBottom = new ImageIcon("asset/br.png");
@@ -163,6 +82,11 @@ public class MainWindow extends JFrame implements Observer {
         this.getContentPane().setLayout(new GridLayout(1,2));
         this.getContentPane().add(board);
         this.getContentPane().add(info);
+        this.map = new char[25][25];
+        this.board2 = map();
+        file = new File(nameFile);
+        System.out.println(file.getAbsoluteFile());
+        System.out.println(file.canRead());
         init();
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -174,7 +98,7 @@ public class MainWindow extends JFrame implements Observer {
         int dim = 10;
         board.setLayout(new GridLayout(dim, dim, 0,0));
         board.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-
+/*
         lb.setIcon(leftBottom);
         rb.setIcon(rightBottom);
         b1.setIcon(bottom);
@@ -365,7 +289,12 @@ public class MainWindow extends JFrame implements Observer {
         board.add(b5);
         board.add(b6);
         board.add(b7);
-        board.add(rb);
+        board.add(rb);*/
+
+        for(JLabel j:label){
+            System.out.println(j);
+            board.add(j);
+        }
 
         //Création panel info
         info.setLayout(new GridLayout(6,3, 0,0));
@@ -399,6 +328,224 @@ public class MainWindow extends JFrame implements Observer {
         startAction.addActionListener(new StartActionListener());
         resetAction.addActionListener(new ResetActionListener());
     }
+
+    public char[][] parcoursMap(String nameFile){
+        int i=0;
+        int j=0;
+        FileInputStream fis = null;
+        BufferedInputStream bis = null;
+        File file = new File(nameFile);
+        System.out.println(file.getAbsoluteFile());
+        try {
+            fis = new FileInputStream(file.getAbsoluteFile());
+            bis = new BufferedInputStream(new FileInputStream(file.getAbsoluteFile()));
+            int buffer;
+            String ligne="";
+            while((buffer = fis.read()) != -1){
+                if (buffer != 32 && buffer != 10 && i<this.map.length){
+                    if (j == 10){
+                        i++;
+                        j=0;
+                        this.map[i][j]=(char)buffer;
+                        System.out.println(this.map[i][j]+" i "+i+" j "+j);
+                    }
+                    else{
+                        this.map[i][j]=(char)buffer;
+                        System.out.println(this.map[i][j]+" i "+i+" j "+j);
+                        j++;
+                    }
+                }
+            }
+            bis.close();
+            fis.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return map;
+    }
+
+    public boolean isEmpty(char[][] map){
+        for (int i=0; i<10;i++){
+            for (int j=0; j<10;j++){
+                if (map[i][j] != '\0'){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public CaseModel[][] map(){
+        CaseModel[][] board2 = new CaseModel[10][10];
+        ElemCaseModel elem;
+        int k = 0;
+        if (isEmpty(this.map)){
+            System.out.println("empty");
+            this.map = parcoursMap(nameFile);
+        }
+        for (int i=0; i<10; i++){
+            for (int j=0; j<10; j++){
+                try {
+                //    System.out.println(this.map[i][j]+" i "+i+" j "+j);
+                    switch (this.map[i][j])
+                    {
+
+                        case '0':
+                            System.out.println("cas 0 i : "+i+" j : "+j);
+                            board2[i][j]= new CaseModel(i, j);
+                            elem = new ElemCaseModel(blank, board2[i][j]);
+                            board2[i][j].getCompElemCase().add(elem);
+                            label.add(blank);
+                            break;
+                        case '1':
+                            System.out.println("cas 1 : i : "+i+" j : "+j);
+                            board2[i][j]= new CaseModel(i, j);
+                            elem = new ElemCaseModel(n1, board2[i][j]);
+                            board2[i][j].getCompElemCase().add(elem);
+                            label.add(n1);
+                            break;
+                        case '2':
+                           System.out.println("cas 2 : i : "+i+" j : "+j);
+                           board2[i][j]= new CaseModel(i, j);
+                           elem = new ElemCaseModel(n2, board2[i][j]);
+                           board2[i][j].getCompElemCase().add(elem);
+                            label.add(n2);
+                           break;
+                        case '3':
+                            System.out.println("cas 3 : i : "+i+" j : "+j);
+                            board2[i][j]= new CaseModel(i, j);
+                            elem = new ElemCaseModel(n3, board2[i][j]);
+                            board2[i][j].getCompElemCase().add(elem);
+                            label.add(n3);
+                            break;
+                        case '4' :
+                            System.out.println("cas 4 : i : "+i+" j : "+j);
+                            board2[i][j]= new CaseModel(i, j);
+                            elem = new ElemCaseModel(n4, board2[i][j]);
+                            board2[i][j].getCompElemCase().add(elem);
+                            label.add(n4);
+                            break;
+                        case '5' :
+                            System.out.println("cas 5 : i : "+i+" j : "+j);
+                            board2[i][j]= new CaseModel(i, j);
+                            elem = new ElemCaseModel(n5, board2[i][j]);
+                            board2[i][j].getCompElemCase().add(elem);
+                            label.add(n5);
+                            break;
+                        case '6' :
+                            System.out.println("cas 6 : i : "+i+" j : "+j);
+                            board2[i][j]= new CaseModel(i, j);
+                            elem = new ElemCaseModel(n6, board2[i][j]);
+                            board2[i][j].getCompElemCase().add(elem);
+                            label.add(n6);
+                            break;
+                        case '7' :
+                            System.out.println("cas 7 : i : "+i+" j : "+j);
+                            board2[i][j]= new CaseModel(i, j);
+                            elem = new ElemCaseModel(n7, board2[i][j]);
+                            board2[i][j].getCompElemCase().add(elem);
+                            label.add(n7);
+                            break;
+                        case '8' :
+                            System.out.println("cas 8 : i : "+i+" j : "+j);
+                            board2[i][j]= new CaseModel(i, j);
+                            elem = new ElemCaseModel(n8, board2[i][j]);
+                            board2[i][j].getCompElemCase().add(elem);
+                            label.add(n8);
+                            break;
+                        case '9' :
+                            System.out.println("cas 9 : i : "+i+" j : "+j);
+                            board2[i][j]= new CaseModel(i, j);
+                            elem = new ElemCaseModel(n9, board2[i][j]);
+                            board2[i][j].getCompElemCase().add(elem);
+                            label.add(n9);
+                            break;
+                        case 'g':
+                            System.out.println("cas g : i : "+i+" j : "+j);
+                            board2[i][j]= new CaseModel(i, j);
+                            elem = new ElemCaseModel(leftTop, board2[i][j]);
+                            board2[i][j].getCompElemCase().add(elem);
+                            image.setIcon(leftTop);
+                            label.add(image);
+                            break;
+                        case 'd':
+                            System.out.println("cas g : i : "+i+" j : "+j);
+                            board2[i][j]= new CaseModel(i, j);
+                            elem = new ElemCaseModel(rightTop, board2[i][j]);
+                            board2[i][j].getCompElemCase().add(elem);
+                            image.setIcon(rightTop);
+                            label.add(image);
+                            break;
+                        case 't':
+                            System.out.println("cas t : i : "+i+" j : "+j);
+                            board2[i][j]= new CaseModel(i, j);
+                            elem = new ElemCaseModel(top, board2[i][j]);
+                            board2[i][j].getCompElemCase().add(elem);
+                            image.setIcon(top);
+                            label.add(image);
+                            break;
+                        case 'l':
+                            System.out.println("cas l : i : "+i+" j : "+j);
+                            board2[i][j]= new CaseModel(i, j);
+                            elem = new ElemCaseModel(left, board2[i][j]);
+                            board2[i][j].getCompElemCase().add(elem);
+                            image.setIcon(left);
+                            label.add(image);
+                            break;
+                        case 'c':
+                            System.out.println("cas c : i : "+i+" j : "+j);
+                            board2[i][j]= new CaseModel(i, j);
+                            elem = new ElemCaseModel(cross, board2[i][j]);
+                            board2[i][j].getCompElemCase().add(elem);
+                            image.setIcon(cross);
+                            label.add(image);
+                            break;
+                        case 'r':
+                            System.out.println("cas r : i : "+i+" j : "+j);
+                            board2[i][j]= new CaseModel(i, j);
+                            elem = new ElemCaseModel(right, board2[i][j]);
+                            board2[i][j].getCompElemCase().add(elem);
+                            image.setIcon(right);
+                            label.add(image);
+                            break;
+                        case 'G':
+                            System.out.println("cas G : i : "+i+" j : "+j);
+                            board2[i][j]= new CaseModel(i, j);
+                            elem = new ElemCaseModel(leftBottom, board2[i][j]);
+                            board2[i][j].getCompElemCase().add(elem);
+                            image.setIcon(leftBottom);
+                            label.add(image);
+                            break;
+                        case 'b':
+                            System.out.println("cas b : i : "+i+" j : "+j);
+                            board2[i][j]= new CaseModel(i, j);
+                            elem = new ElemCaseModel(bottom, board2[i][j]);
+                            board2[i][j].getCompElemCase().add(elem);
+                            image.setIcon(bottom);
+                            label.add(image);
+                            break;
+                        case 'D':
+                            System.out.println("cas D : i : "+i+" j : "+j);
+                            board2[i][j]= new CaseModel(i, j);
+                            elem = new ElemCaseModel(rightBottom, board2[i][j]);
+                            board2[i][j].getCompElemCase().add(elem);
+                            image.setIcon(rightBottom);
+                            label.add(image);
+                            break;
+                        default:
+                            System.out.println("Error : afficheMapGraphique() ");
+                            break;
+                    }
+                }catch (Exception e){
+                    System.out.println("EROROROROROROROR");
+                }
+
+            }
+        }
+        return board2;
+    }
+
 
     @Override
     public void update(Observable o, Object arg) {
